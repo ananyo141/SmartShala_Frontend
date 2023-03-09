@@ -32,7 +32,7 @@ class _EgeCamState extends State<EgeCam> {
     // Platform messages may fail, so we use a try/catch PlatformException.
     // We also handle the message potentially returning null.
     try {
-      imagePath = (await EdgeDetection.detectEdge);
+      imagePath = "new";
       log("$imagePath");
     } on PlatformException catch (e) {
       imagePath = e.toString();
