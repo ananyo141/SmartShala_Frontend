@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import '../models/dash_testmodel.dart';
-import '../constants/routes.dart';
+import '../constants/api_routes.dart';
 
 Future<List<DashTestModel>> fetchTests(http.Client client) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -15,7 +15,7 @@ Future<List<DashTestModel>> fetchTests(http.Client client) async {
   };
   final response = await client.get(
       // Uri.parse('https://jsonplaceholder.typicode.com/photos'),
-      Uri.parse('$baseurl/test/?page=1&page_size=10'),
+      Uri.parse(testurl),
       headers: requestHeaders);
   log("fetchTests -> ${response.body}");
   // Use the compute function to run parseTests in a separate isolate.

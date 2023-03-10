@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:smart_shala/models/login_model.dart';
+import 'package:smart_shala/constants/api_routes.dart';
 
 class LoginApi {
   Future<LoginResponseModel> login(LoginRequestModel requestModel) async {
-    String url = "http://parikshana.smartshala.live/api/login/";
-    final response = await http.post(Uri.parse(url),
+    final response = await http.post(Uri.parse(loginurl),
         body: json.encode(requestModel.toJson()),
         headers: {"Content-type": "application/json"});
     // User is registered and tokens received

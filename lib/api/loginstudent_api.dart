@@ -1,12 +1,13 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import '../constants/api_routes.dart';
 
 import '../models/login_student_model.dart';
 
 class LoginstudentApi {
   Future<LoginstudentResponseModel> login(
       LoginstudentRequestModel requestModel) async {
-    String url = "http://parikshana.smartshala.live/api/login/";
+    String url = loginurl;
     final response = await http.post(Uri.parse(url),
         body: json.encode(requestModel.toJson()),
         headers: {"Content-type": "application/json"});

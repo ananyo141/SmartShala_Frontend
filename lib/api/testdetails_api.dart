@@ -1,14 +1,13 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:http/http.dart' as http;
+import 'package:smart_shala/constants/api_routes.dart';
 import '../models/testdetailsmodel.dart';
-import '../constants/routes.dart';
 
 class TestDetailsApi {
   Future<TestDetailsResponseModel> create(
       TestDetailsRequestModel requestModel, String accessToken) async {
-    String url = "$baseurl/test/";
-    final response = await http.post(Uri.parse(url),
+    final response = await http.post(Uri.parse(testurl),
         body: json.encode(requestModel.toJson()),
         headers: {
           'Content-Type': 'application/json',

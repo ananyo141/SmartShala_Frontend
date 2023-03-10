@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smart_shala/constants/api_routes.dart';
 
 class UploadApi{
   final String testId;
@@ -22,7 +23,7 @@ class UploadApi{
     });
     try {
       var response = await dio.post(
-          "http://parikshana.smartshala.live/api/grader/$testId/",
+          "$gradeurl$testId/",
           data: formData);
       log(response.toString());
     } on DioError catch (e) {

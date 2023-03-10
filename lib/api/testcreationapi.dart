@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:http/http.dart' as http;
-import '../constants/routes.dart';
+import '../constants/api_routes.dart';
 
 class TestCreationApi {
   dynamic create(
       String jsonString, int testId, String accessToken) async {
-    String url = "$baseurl/test/$testId/questions/";
+    String url = "$testurl$testId/questions/";
     final response =
         await http.post(Uri.parse(url), body: jsonString, headers: {
       'Content-Type': 'application/json',

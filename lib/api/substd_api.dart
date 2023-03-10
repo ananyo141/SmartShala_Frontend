@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../models/substd_model.dart';
-import '../constants/routes.dart';
+import '../constants/api_routes.dart';
 
 class SubAndStdApi {
   Future<SubAndStdModel> getdata(String accessToken) async {
-    String url = "$baseurl/test/form-data/";
+    String url = "{$testurl}form-data/";
     final response = await http.get(Uri.parse(url), headers: {
       "Content-type": "application/json",
       "Authorization": "Bearer $accessToken",

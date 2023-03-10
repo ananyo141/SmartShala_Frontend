@@ -31,7 +31,6 @@ const subjectRoute = '/subject';
 const studentloginRoute = '/studentlogin/';
 const studashRoute = '/studentdash/';
 const loginstuRoute = '/logstud/';
-const baseurl = "http://parikshana.smartshala.live/api";
 
 class RouteGenerator {
   static Route<dynamic>? generateRoute(RouteSettings settings) {

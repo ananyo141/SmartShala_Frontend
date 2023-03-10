@@ -16,14 +16,16 @@ class _HomePage extends State<HomePage> {
           title: const Text('Home'),
           backgroundColor: const Color.fromARGB(255, 3, 19, 32),
         ),
-        body: Column(
-          children: [
-            Image.asset('images/home_bg.gif'),
-            const SizedBox(height: 30),
-            _buildButton("images/classes.jpg", "Classes", classRoute),
-            _buildButton("images/subjects.png", "Subjects", subjectRoute),
-            _buildButton("images/results.png", "Test results", classRoute),
-          ],
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Image.asset('images/home_bg.gif'),
+              const SizedBox(height: 30),
+              _buildButton("images/classes.jpg", "Classes", classRoute),
+              _buildButton("images/subjects.png", "Subjects", subjectRoute),
+              _buildButton("images/results.png", "Test results", classRoute),
+            ],
+          ),
         ));
   }
 

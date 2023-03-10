@@ -2,12 +2,12 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:http/http.dart' as http;
 import '../models/register_model.dart';
+import '../constants/api_routes.dart';
 
 class RegisterApi {
   Future<RegisterResponseModel> register(
       RegisterRequestModel requestModel) async {
-    String url = "http://parikshana.smartshala.live/api/user/";
-    final response = await http.post(Uri.parse(url),
+    final response = await http.post(Uri.parse(registerurl),
         body: json.encode(requestModel.toJson()),
         headers: {"Content-type": "application/json"});
     log(response.body);

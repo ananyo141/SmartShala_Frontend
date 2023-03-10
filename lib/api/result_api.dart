@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import '../models/dash_testmodel.dart';
-import '../constants/routes.dart';
+import '../constants/api_routes.dart';
 import '../models/resultmodel.dart';
 
 Future<List<ResultModel>> fetchresults(
@@ -15,10 +15,8 @@ Future<List<ResultModel>> fetchresults(
   Map<String, String> requestHeaders = {
     'Authorization': 'Bearer $token',
   };
-  final response = await client.get(
-      // Uri.parse('https://jsonplaceholder.typicode.com/photos'),
-      Uri.parse('$baseurl/grader/$testID'),
-      headers: requestHeaders);
+  final response =
+      await client.get(Uri.parse('$gradeurl$testID/'), headers: requestHeaders);
   log("fetchresults -> ${response.body}");
   // Use the compute function to run parseTests in a separate isolate.
   // log(response);
