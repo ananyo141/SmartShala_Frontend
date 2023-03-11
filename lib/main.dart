@@ -5,11 +5,6 @@ import 'constants/routes.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // final cameras = await availableCameras();
-
-  // get login instance
-  // // Get a specific camera from the list of available cameras.
-  // final firstCamera = cameras.first;
   runApp(MaterialApp(
     title: 'SmartShala',
     theme: ThemeData(

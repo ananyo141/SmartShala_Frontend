@@ -79,72 +79,83 @@ class _TestDetailsState extends State<TestDetails> {
                           horizontal: 8.0, vertical: 2.0),
                       child: SizedBox(
                         width: double.maxFinite,
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text('Standard',
-                                  style: TextStyle(fontSize: 20)),
-                              const SizedBox(
-                                width: 8,
-                              ),
-                              SizedBox(
-                                width: 72,
-                                child: DropdownButtonFormField<int?>(
-                                  hint: const Text('Choose'),
-                                  value: standard,
-                                  validator: (value) =>
-                                      value != null ? null : "Required",
-                                  icon: const Icon(Icons.arrow_downward),
-                                  elevation: 16,
-                                  style:
-                                      const TextStyle(color: Colors.deepPurple),
-                                  onChanged: (int? newValue) {
-                                    setState(() {
-                                      standard = newValue!;
-                                    });
-                                  },
-                                  items: (standards ?? [])
-                                      .map<DropdownMenuItem<int?>>((value) {
-                                    return DropdownMenuItem<int>(
-                                      value: value[0],
-                                      child: Text(
-                                        value[1].toString(),
-                                        style: const TextStyle(fontSize: 16),
-                                      ),
-                                    );
-                                  }).toList(),
+                        child: Column(
+                          children: [
+                            Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: const [
+                                  Text('Standard',
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontStyle: FontStyle.italic)),
+                                  Text('Subject',
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontStyle: FontStyle.italic)),
+                                ]),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(
+                                  child: DropdownButtonFormField<int?>(
+                                    hint: const Text('Choose'),
+                                    value: standard,
+                                    validator: (value) =>
+                                        value != null ? null : "Required",
+                                    icon: const Icon(Icons.arrow_downward),
+                                    elevation: 16,
+                                    style: const TextStyle(
+                                        color: Colors.deepPurple),
+                                    onChanged: (int? newValue) {
+                                      setState(() {
+                                        standard = newValue!;
+                                      });
+                                    },
+                                    items: (standards ?? [])
+                                        .map<DropdownMenuItem<int?>>((value) {
+                                      return DropdownMenuItem<int>(
+                                        value: value[0],
+                                        child: Text(
+                                          value[1].toString(),
+                                          style: const TextStyle(fontSize: 16),
+                                        ),
+                                      );
+                                    }).toList(),
+                                  ),
                                 ),
-                              ),
-                              const Text('Subject',
-                                  style: TextStyle(fontSize: 20)),
-                              const SizedBox(width: 6),
-                              SizedBox(
-                                width: 100,
-                                child: DropdownButtonFormField<int>(
-                                  hint: const Text('Choose'),
-                                  validator: (value) =>
-                                      value != null ? null : "Required",
-                                  value: subject,
-                                  icon: const Icon(Icons.arrow_circle_down,
-                                      size: 18),
-                                  elevation: 16,
-                                  style:
-                                      const TextStyle(color: Colors.deepPurple),
-                                  onChanged: (int? newValue) {
-                                    setState(() {
-                                      subject = newValue!;
-                                    });
-                                  },
-                                  items: (subjects ?? [])
-                                      .map<DropdownMenuItem<int>>((value) {
-                                    return DropdownMenuItem<int>(
-                                      value: value[0],
-                                      child: Text(value[1]),
-                                    );
-                                  }).toList(),
+                                const SizedBox(
+                                  width: 40,
                                 ),
-                              )
-                            ]),
+                                Flexible(
+                                  child: DropdownButtonFormField<int>(
+                                    hint: const Text('Choose'),
+                                    validator: (value) =>
+                                        value != null ? null : "Required",
+                                    value: subject,
+                                    icon: const Icon(Icons.arrow_circle_down,
+                                        size: 18),
+                                    elevation: 16,
+                                    style: const TextStyle(
+                                        color: Colors.deepPurple),
+                                    onChanged: (int? newValue) {
+                                      setState(() {
+                                        subject = newValue!;
+                                      });
+                                    },
+                                    items: (subjects ?? [])
+                                        .map<DropdownMenuItem<int>>((value) {
+                                      return DropdownMenuItem<int>(
+                                        value: value[0],
+                                        child: Text(value[1]),
+                                      );
+                                    }).toList(),
+                                  ),
+                                )
+                              ],
+                            )
+                          ],
+                        ),
                       ),
                     ),
                     // Test Topic Field
