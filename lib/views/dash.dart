@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import '../constants/routes.dart';
-import '../api/dash_test_api.dart';
 import '../models/dash_testmodel.dart';
+import '../static_data/dash_data.dart' as data;
 
 class Dashboard extends StatelessWidget {
   const Dashboard({super.key, required this.title});
@@ -16,21 +15,8 @@ class Dashboard extends StatelessWidget {
         backgroundColor: const Color.fromARGB(255, 1, 21, 37),
         title: Text(title),
       ),
-      body: FutureBuilder<List<DashTestModel>>(
-        future: fetchTests(http.Client()),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return const Center(
-              child: Text('An error has occurred!'),
-            );
-          } else if (snapshot.hasData) {
-            return Testlist(tests: snapshot.data!);
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        },
+      body: const Center(
+        child: Testlist(tests: data.tests),
       ),
     );
   }

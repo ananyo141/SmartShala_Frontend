@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:http/http.dart' as http;
 import '../api/result_api.dart';
 import '../models/resultmodel.dart';
+import '../static_data/result_data.dart' as data;
 
 class ResultView extends StatefulWidget {
   const ResultView({Key? key, required this.testID}) : super(key: key);
@@ -21,23 +22,7 @@ class _ResultViewState extends State<ResultView> {
         backgroundColor: const Color.fromARGB(255, 1, 21, 37),
         title: const Text("Results"),
       ),
-      body: FutureBuilder<List<ResultModel>>(
-        future: fetchresults(http.Client(), widget.testID),
-        builder: (context, snapshot) {
-          print(snapshot);
-          if (snapshot.hasError) {
-            return const Center(
-              child: Text('An error has occurred!'),
-            );
-          } else if (snapshot.hasData) {
-            return Resultlist(results: snapshot.data!);
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        },
-      ),
+      body: const Resultlist(results: data.results)
     );
   }
 }

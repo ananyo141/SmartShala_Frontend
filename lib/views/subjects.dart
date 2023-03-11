@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import '../api/stdtest_api.dart';
 import '../constants/routes.dart';
 import '../models/dash_testmodel.dart';
+import '../static_data/dash_data.dart' as data;
 
 class Subjectdetails extends StatefulWidget {
   const Subjectdetails({Key? key, required this.id}) : super(key: key);
@@ -15,27 +14,11 @@ class _SubjectdetailsState extends State<Subjectdetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 1, 21, 37),
-        title: const Text('Test'),
-      ),
-      body: FutureBuilder<List<DashTestModel>>(
-        future: fetchstdTests(http.Client(), widget.id),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return const Center(
-              child: Text('An error has occurred!'),
-            );
-          } else if (snapshot.hasData) {
-            return Testlist(tests: snapshot.data!);
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        },
-      ),
-    );
+        appBar: AppBar(
+          backgroundColor: const Color.fromARGB(255, 1, 21, 37),
+          title: const Text('Test'),
+        ),
+        body: const Testlist(tests: data.tests));
   }
 }
 
@@ -60,7 +43,7 @@ class Testlist extends StatelessWidget {
             width: 370.0,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(40.0),
-                gradient: LinearGradient(
+                gradient: const LinearGradient(
                   colors: [Colors.blue, Color.fromARGB(255, 255, 255, 255)],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
@@ -70,7 +53,7 @@ class Testlist extends StatelessWidget {
                 Text(item.subject,
                     style: Theme.of(context)
                         .textTheme
-                        .headline2!
+                        .headlineSmall!
                         .copyWith(color: const Color.fromARGB(255, 2, 25, 44))),
                 const SizedBox(
                   height: 20,
@@ -78,7 +61,7 @@ class Testlist extends StatelessWidget {
                 Text(item.topic,
                     style: Theme.of(context)
                         .textTheme
-                        .headline4!
+                        .headlineMedium!
                         .copyWith(color: Colors.white)),
                 const SizedBox(
                   height: 25,
@@ -86,7 +69,7 @@ class Testlist extends StatelessWidget {
                 Text('Class:${item.forClass}',
                     style: Theme.of(context)
                         .textTheme
-                        .headline4!
+                        .headlineMedium!
                         .copyWith(color: Colors.white)),
                 const SizedBox(
                   height: 50,

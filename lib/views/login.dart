@@ -3,11 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../constants/routes.dart';
-import '../api/login_api.dart';
 import '../progress_hud.dart';
 import '../models/login_model.dart';
 import '../utils/validators.dart' as valid;
-import '../api/getuser_api.dart';
+import '../static_data/getuser_data.dart' as data;
+import '../static_data/login_data.dart' as loginData;
 
 /*
 
@@ -145,54 +145,40 @@ class _LoginViewState extends State<LoginView> {
     );
   }
 
-  void loginCallback() {
+  void loginCallback() async {
     if (_formkey.currentState!.validate()) {
       setState(() {
         _isApiCallInProgress = true;
       });
-
-      LoginApi loginApi = LoginApi();
-      loginApi
-          .login(LoginRequestModel(
-              email: _emailCtrl.text.trim(), password: _passCtrl.text))
-          .then((value) async {
-        setState(() {
-          _isApiCallInProgress = false;
-        });
-        if (value.access.isNotEmpty) {
-          final SharedPreferences sharedPreferences =
-              await SharedPreferences.getInstance();
-          sharedPreferences.setString('access', value.access);
-          sharedPreferences.setString('refresh', value.refresh);
-          _setUserDetails(value.access, sharedPreferences);
-
-          if (!mounted) return;
-          ScaffoldMessenger.of(context)
-              .showSnackBar(const SnackBar(content: Text('Login Successful')));
-          Navigator.of(context)
-              .pushNamedAndRemoveUntil(mainpageRoute, (route) => false);
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('User not registered')));
-        }
+      await Future.delayed(const Duration(seconds: 1));
+      setState(() {
+        _isApiCallInProgress = false;
       });
+      final SharedPreferences sharedPreferences =
+          await SharedPreferences.getInstance();
+      sharedPreferences.setString('access', loginData.access);
+      sharedPreferences.setString('refresh', loginData.refresh);
+      _setUserDetails(loginData.access, sharedPreferences);
+
+      if (!mounted) return;
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('Login Successful')));
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil(mainpageRoute, (route) => false);
     }
   }
 
   void _setUserDetails(
       String accessToken, SharedPreferences sharedPreferences) {
-    final GetUserApi getUserApi = GetUserApi();
-    getUserApi.getUser(accessToken).then((value) {
-      sharedPreferences.setString('name', value.name ?? "null");
-      sharedPreferences.setInt('contact', value.contact!);
-      sharedPreferences.setString('email', value.email ?? "null");
-      sharedPreferences.setString('teacher_id', value.teacherId ?? "null");
-    });
+    sharedPreferences.setString('name', data.user.name ?? "null");
+    sharedPreferences.setInt('contact', data.user.contact!);
+    sharedPreferences.setString('email', data.user.email ?? "null");
+    sharedPreferences.setString('teacher_id', data.user.teacherId ?? "null");
   }
 
   static InputDecoration _getDecor(String label) {
     return InputDecoration(
-        fillColor: Color.fromARGB(249, 245, 245, 245),
+        fillColor: const Color.fromARGB(249, 245, 245, 245),
         filled: true,
         hintText: label,
         border: OutlineInputBorder(

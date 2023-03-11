@@ -1,11 +1,10 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_shala/api/testdetails_api.dart';
 import 'package:smart_shala/models/testdetailsmodel.dart';
 import 'test_creation.dart';
-import '../api/substd_api.dart';
 import '../utils/validators.dart' as valid;
+import '../static_data/substd_data.dart' as data;
 
 /// Get the test details from the user and send to api;
 /// then display the test creation page
@@ -36,16 +35,9 @@ class _TestDetailsState extends State<TestDetails> {
   }
 
   void _getSubAndStd() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    _accessToken = sharedPreferences.getString('access');
-    SubAndStdApi substdapi = SubAndStdApi();
-    substdapi.getdata(_accessToken!).then((value) {
-      setState(() {
-        standards = value.standards;
-        subjects = value.subjects;
-      });
-      log(standards.toString());
-      log(subjects.toString());
+    setState(() {
+      standards = data.standards;
+      subjects = data.subjects;
     });
   }
 
@@ -219,32 +211,13 @@ class _TestDetailsState extends State<TestDetails> {
 
   void createCallback() async {
     if (_formkey.currentState!.validate()) {
-      int? testId;
-      TestDetailsApi testDetailsApi = TestDetailsApi();
-      await testDetailsApi
-          .create(
-              TestDetailsRequestModel(
-                  name: name.text,
-                  description: desc.text,
-                  topic: topic.text,
-                  standard: standard!,
-                  subject: subject!),
-              _accessToken!)
-          .then((value) {
-        log("Response value -> ${value.toJson().toString()}");
-        testId = value.testId;
-      });
+      int testId = 32;
       log("Test id -> ${testId.toString()}");
       if (!mounted) return;
-      if (testId == null) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text('Error creating test')));
-        return;
-      }
       Navigator.of(context).push(MaterialPageRoute(
         builder: (BuildContext context) => TestCreationPage(
           totalQuestions: int.parse(quesNum.text),
-          testId: testId!,
+          testId: testId,
         ),
       ));
     }

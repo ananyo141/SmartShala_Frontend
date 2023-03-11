@@ -1,10 +1,8 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:smart_shala/views/logoptions.dart';
 import 'constants/routes.dart';
-import 'views/login.dart';
 import 'views/main_view.dart';
 
 Future<void> main() async {

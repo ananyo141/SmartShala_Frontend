@@ -1,7 +1,5 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../api/substd_api.dart';
+import '../static_data/substd_data.dart' as data;
 
 class SubjectDetails extends StatefulWidget {
   const SubjectDetails({Key? key}) : super(key: key);
@@ -12,29 +10,8 @@ class SubjectDetails extends StatefulWidget {
 class _SubjectDetailsState extends State<SubjectDetails> {
   int? standard;
   int? subject;
-  String? _accessToken;
-  List<List<int>>? standards;
-  List<List<dynamic>>? subjects;
-
-  @override
-  void initState() {
-    _getSubAndStd();
-    super.initState();
-  }
-
-  void _getSubAndStd() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    _accessToken = sharedPreferences.getString('access');
-    SubAndStdApi substdapi = SubAndStdApi();
-    await substdapi.getdata(_accessToken!).then((value) {
-      setState(() {
-        standards = value.standards;
-        subjects = value.subjects;
-      });
-      log(standards.toString());
-      log(subjects.toString());
-    });
-  }
+  List<List<int>> standards = data.standards;
+  List<List<dynamic>> subjects = data.subjects;
 
   @override
   Widget build(BuildContext context) {
@@ -45,9 +22,9 @@ class _SubjectDetailsState extends State<SubjectDetails> {
         ),
         body: ListView.builder(
           scrollDirection: Axis.vertical,
-          itemCount: subjects?.length,
+          itemCount: subjects.length,
           itemBuilder: (context, index) {
-            final item = subjects?[index];
+            final item = subjects[index];
             return Center(
               child: Container(
                 height: 100.0,
@@ -64,9 +41,13 @@ class _SubjectDetailsState extends State<SubjectDetails> {
                     const SizedBox(
                       height: 20,
                     ),
-                    Text(item?[1],
-                        style: Theme.of(context).textTheme.headline4!.copyWith(
-                            color: const Color.fromARGB(255, 255, 255, 255))),
+                    Text(item[1],
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineMedium!
+                            .copyWith(
+                                color:
+                                    const Color.fromARGB(255, 255, 255, 255))),
                     const SizedBox(
                       height: 20,
                     ),

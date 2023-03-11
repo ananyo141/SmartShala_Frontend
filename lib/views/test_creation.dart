@@ -154,38 +154,15 @@ class _TestCreationPageState extends State<TestCreationPage> {
   }
 
   void createCallback() async {
-    List<Map<String, dynamic>> jsonData = [];
-    for (QuestionData c in dataList) {
-      jsonData.add(c.toJson());
-    }
-    TestCreationApi testCreationApi = TestCreationApi();
-    testCreationApi
-        .create(jsonEncode(jsonData), widget.testId, _accessToken!)
-        .then(
-      (value) {
-        log("value -> ${value.toString()}");
-        if (value.isNotEmpty) {
-          ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Test Successfully Created')));
-          Navigator.of(context)
-              .pushNamedAndRemoveUntil(testdashRoute, (route) => false);
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Test Creation Failed')));
-        }
-      },
-    );
+    ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Test Successfully Created')));
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil(testdashRoute, (route) => false);
   }
 
   void _onBackPressed() async {
-    TestDeleteApi testDeleteApi = TestDeleteApi();
-    testDeleteApi.delete(_accessToken!, widget.testId).then((value) {
-      if (value != TestDeleteApi.deleteCode) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('Server Error $value')));
-      } else {
-        Navigator.of(context).pushReplacementNamed(addtestRoute);
-      }
-    });
+    ScaffoldMessenger.of(context)
+        .showSnackBar(const SnackBar(content: Text('Cancelled Test Creation')));
+    Navigator.of(context).pushReplacementNamed(addtestRoute);
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../api/substd_api.dart';
 import '../constants/routes.dart';
+import '../static_data/substd_data.dart' as data;
 
 class ClassDetails extends StatefulWidget {
   const ClassDetails({Key? key}) : super(key: key);
@@ -24,16 +25,9 @@ class _ClassDetailsState extends State<ClassDetails> {
   }
 
   void _getSubAndStd() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    _accessToken = sharedPreferences.getString('access');
-    SubAndStdApi substdapi = SubAndStdApi();
-    await substdapi.getdata(_accessToken!).then((value) {
-      setState(() {
-        standards = value.standards;
-        subjects = value.subjects;
-      });
-      log(standards.toString());
-      log(subjects.toString());
+    setState(() {
+      standards = data.standards;
+      subjects = data.subjects;
     });
   }
 
@@ -70,7 +64,7 @@ class _ClassDetailsState extends State<ClassDetails> {
                       child: Text('Standard:${(item?[1])}',
                           style: Theme.of(context)
                               .textTheme
-                              .headline4!
+                              .headlineMedium!
                               .copyWith(
                                   color: const Color.fromARGB(
                                       255, 255, 255, 255))),
